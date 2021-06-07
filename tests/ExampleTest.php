@@ -1,6 +1,6 @@
 <?php
 
-namespace VendorName\Skeleton\Tests;
+namespace Reddot\TegetaReservation\Tests;
 
 class ExampleTest extends TestCase
 {
