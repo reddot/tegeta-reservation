@@ -59,7 +59,7 @@ class TegetaReservationTest extends TestCase
         $this->assertArrayHasKey('available_datetimes', $reservationInformationMonth['ცენტრალური']);
         $this->assertArrayHasKey('not_available_datetimes', $reservationInformationMonth['ცენტრალური']);
 
-        $this->assertIsArray( $reservationInformationMonth['ცენტრალური']['available_datetimes']);
-        $this->assertIsArray( $reservationInformationMonth['ცენტრალური']['not_available_datetimes']);
+        $this->assertIsArray($reservationInformationMonth['ცენტრალური']['available_datetimes']);
+        $this->assertIsArray($reservationInformationMonth['ცენტრალური']['not_available_datetimes']);
     }
 }
