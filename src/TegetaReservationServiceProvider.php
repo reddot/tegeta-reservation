@@ -20,7 +20,7 @@ class TegetaReservationServiceProvider extends PackageServiceProvider
             ->hasViews();
     }
 
-    public function bootingPackage()
+    public function bootingPackage() : void
     {
         $this->app->bind('tegeta-reservation-service', function () {
             return new ReservationService();

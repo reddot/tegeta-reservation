@@ -11,7 +11,7 @@ class ReservationService
 
     public function __construct()
     {
-        $this->baseUrl = config('tegeta-reservation.url');
+        $this->baseUrl = $this->url = config('tegeta-reservation.url');
     }
 
     /**
@@ -23,7 +23,7 @@ class ReservationService
      *      code - რეზერვაციის ჯგუფის კოდი
      *      vehicle_type  - light(მსუბუქი), truck(სატვირთო), van(მიკროავტობუსი)
      */
-    public function reservationInformation(string $code = "001", ?string $vehicleType = null)
+    public function reservationInformation(string $code = "001", ?string $vehicleType = null): ?array
     {
         return $this->sendPostRequest('/api/reservation_information', [
             'code' => $code,
@@ -40,7 +40,7 @@ class ReservationService
      *      service_type - სერვისის დასახელება
      *      date - თარიღი (yyyy-mm-dd)
      */
-    public function reservationInformationFiltered(string $branch, string $serviceType, string $date)
+    public function reservationInformationFiltered(string $branch, string $serviceType, string $date): ?array
     {
         return $this->sendPostRequest('/api/reservation_information_filtered', [
             'branch' => $branch,
@@ -72,7 +72,7 @@ class ReservationService
      *      {result : 2} - მოცემული მანქანის ნომრით ამ დროს უკვე რეზერვირებულია
      *      {result : 3} - რეზერვაცია შეუძლებელია (არასწორი დრო ან მოცემულ დროს რეზერვაციისთვის განკუთვნილი ბოქსების და რეზერვაციის ჩანაწერების რაოდენობები ტოლია)
      */
-    public function reserve($stateNumber, $vehicleType, $userType, $IDNumber, $companyID, $branch, $serviceType, $date, $time, $phoneNumber)
+    public function reserve(string $stateNumber, string $vehicleType, ?string $userType, ?string $IDNumber, ?string $companyID, ?string $branch, ?string $serviceType, ?string $date, ?string $time, ?string $phoneNumber): ?array
     {
         $data = [
             'state_number' => $stateNumber,
@@ -105,7 +105,7 @@ class ReservationService
      *      year - წელი (yyyy)
      *      month - თვე (mm)
      */
-    public function reservationInformationMonth(string $branch, string $serviceType, string $year, string $month)
+    public function reservationInformationMonth(string $branch, string $serviceType, string $year, string $month): ?array
     {
         return $this->sendPostRequest('/api/reservation_information_month', [
             'branch' => $branch,
@@ -127,9 +127,10 @@ class ReservationService
      *      - {result : 0} წარმატებით დაბრუნდა ინფორმაცია
      *      - {result : 1} ვერ მოიძებნა რეზერვაცისს ID
      */
-    public function reservedInformation(array $reservationIDs)
+    public function reservedInformation(array $reservationIDs): ?array
     {
         // ToDo
+        return null;
     }
 
     /**
@@ -144,13 +145,14 @@ class ReservationService
      *      - {result : 0} წარმატებით გაუქმდა რეზერვაცია
      *      - {result : 1} ვერ მოიძებნა რეზერვაცისს ID
      */
-    public function reservedRemove(string $reservationID)
+    public function reservedRemove(string $reservationID): ?array
     {
         // ToDo
+        return null;
     }
 
     // sets request url
-    private function sendPostRequest(string $path, ?array $data = [])
+    private function sendPostRequest(string $path, array $data = []): ?array
     {
         $this->url = $this->baseUrl . $path;
         $this->url = preg_replace('/([^:])(\/{2,})/', '$1/', $this->url);
