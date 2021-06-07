@@ -54,7 +54,7 @@
                 "Reddot\\TegetaReservation\\TegetaReservationServiceProvider"
             ],
             "aliases": {
-                "TegetaReservation": "Reddot\\TegetaReservation\\TegetaReservationFacade"
+                "ReservationService": "Reddot\\TegetaReservation\\Facade\\ReservationService"
             }
         }
     },
