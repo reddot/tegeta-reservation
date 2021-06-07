@@ -4,7 +4,6 @@ namespace Reddot\TegetaReservation;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Reddot\TegetaReservation\Commands\TegetaReservationCommand;
 
 class TegetaReservationServiceProvider extends PackageServiceProvider
 {
