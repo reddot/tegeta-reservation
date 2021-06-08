@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Reddot\TegetaReservation\Facades\ReservationServiceApi;
 use Reddot\TegetaReservation\Http\Middleware\ForceJsonResponse;
+use Reddot\TegetaReservation\Http\Requests\DatesNMonthRequest;
+use Reddot\TegetaReservation\Http\Requests\DatesRequest;
+use Reddot\TegetaReservation\Http\Requests\ReserveRequest;
+use Reddot\TegetaReservation\Http\Requests\ServicesRequest;
+use Reddot\TegetaReservation\Http\Requests\TimesRequest;
 
 class ReservationApiController extends Controller
 {
@@ -25,15 +30,11 @@ class ReservationApiController extends Controller
         ]);
     }
 
-    public function services(Request $request): JsonResponse
+    public function services(ServicesRequest $request): JsonResponse
     {
-        $request->validate([
-            'branch' => 'required',
-        ]);
-
         $reservationInformation = ReservationServiceApi::reservationInformation();
 
-        if (! array_key_exists($request->branch, $reservationInformation)) {
+        if (!array_key_exists($request->branch, $reservationInformation)) {
             abort(404);
         }
 
@@ -42,18 +43,11 @@ class ReservationApiController extends Controller
         ]);
     }
 
-    public function dates(Request $request): JsonResponse
+    public function dates(DatesRequest $request): JsonResponse
     {
-        $request->validate([
-            'branch' => 'required',
-            'service_type' => 'required',
-            'year' => 'required',
-            'month' => 'required',
-        ]);
-
         $reservationInformationMonth = ReservationServiceApi::reservationInformationMonth($request->branch, $request->service_type, $request->year, $request->month);
 
-        if (! array_key_exists($request->branch, $reservationInformationMonth)) {
+        if (!array_key_exists($request->branch, $reservationInformationMonth)) {
             abort(404);
         }
 
@@ -63,15 +57,8 @@ class ReservationApiController extends Controller
         ]);
     }
 
-    public function datesNMonth(Request $request): JsonResponse
+    public function datesNMonth(DatesNMonthRequest $request): JsonResponse
     {
-        $request->validate([
-            'branch' => 'required',
-            'service_type' => 'required',
-            'year' => 'required',
-            'month' => 'required',
-            'n' => 'required',
-        ]);
         $date = DateTime::createFromFormat('m-Y', $request->month . '-' . $request->year);
         $resultAvailable = [];
         $resultNotAvailable = [];
@@ -81,7 +68,7 @@ class ReservationApiController extends Controller
             $month = $date->format('m');
             $reservationInformationMonth = ReservationServiceApi::reservationInformationMonth($request->branch, $request->service_type, $year, $month);
 
-            if (! array_key_exists($request->branch, $reservationInformationMonth)) {
+            if (!array_key_exists($request->branch, $reservationInformationMonth)) {
                 abort(404);
             }
 
@@ -97,19 +84,13 @@ class ReservationApiController extends Controller
         ]);
     }
 
-    public function times(Request $request): JsonResponse
+    public function times(TimesRequest $request): JsonResponse
     {
-        $request->validate([
-            'branch' => 'required',
-            'service_type' => 'required',
-            'date' => 'required',
-        ]);
-
         $reservationInformationMonth = ReservationServiceApi::reservationInformationFiltered($request->branch, $request->service_type, $request->date);
 
         if (
-            ! array_key_exists($request->branch, $reservationInformationMonth) ||
-            ! array_key_exists($request->service_type, $reservationInformationMonth[$request->branch])
+            !array_key_exists($request->branch, $reservationInformationMonth) ||
+            !array_key_exists($request->service_type, $reservationInformationMonth[$request->branch])
         ) {
             abort(404);
         }
@@ -138,19 +119,8 @@ class ReservationApiController extends Controller
         ]);
     }
 
-    public function reserve(Request $request): JsonResponse
+    public function reserve(ReserveRequest $request): JsonResponse
     {
-        $request->validate([
-            'plate_number' => 'required',
-            'car_type' => 'required',
-            'user_type' => 'required',
-            'branch' => 'required',
-            'service' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-            'phone' => 'required',
-        ]);
-
         $reserveResult = ReservationServiceApi::reserve(
             $request->plate_number,
             $request->car_type,
