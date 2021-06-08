@@ -2,7 +2,6 @@
 
 namespace Reddot\TegetaReservation;
 
-
 class ReservationService
 {
 }
