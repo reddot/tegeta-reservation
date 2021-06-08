@@ -109,4 +109,45 @@ class TegetaReservationApiControllerTest extends TestCase
             ->assertStatus(422)
             ->assertJsonValidationErrors(['branch', 'service_type', 'year', 'month', 'n']);
     }
+
+    /** @test */
+    public function test_api_times()
+    {
+        // 200: Ok
+        $this->get(route('reservation.api.times', [
+            'branch' => 'ცენტრალური',
+            'service_type' => 'სავალი ნაწილი',
+            'date' => Carbon::tomorrow()->startOfWeek()->addWeek()->format('Y-m-d'),
+        ]))
+            ->assertJsonStructure([
+                'times' => [
+                    'reservation_times' => [],
+                    'not_available_datetimes' => [],
+                    'available' => [],
+                ]
+            ]);
+
+        // 404: Not Found
+        $this->get(route('reservation.api.times', [
+            'branch' => '123 არავალიდური სერვის ცენტრი 321',
+            'service_type' => 'სავალი ნაწილი',
+            'date' => Carbon::tomorrow()->startOfWeek()->addWeek()->format('Y-m-d'),
+        ]))
+            ->assertStatus(404)
+            ->assertNotFound();
+
+        // 404: Not Found
+        $this->get(route('reservation.api.times', [
+            'branch' => 'ცენტრალური',
+            'service_type' => '123 არავალიდური სერვისი 321',
+            'date' => Carbon::tomorrow()->startOfWeek()->addWeek()->format('Y-m-d'),
+        ]))
+            ->assertStatus(404)
+            ->assertNotFound();
+
+        // 422: Branch is required
+        $this->get(route('reservation.api.times'))
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['branch', 'service_type', 'date']);
+    }
 }

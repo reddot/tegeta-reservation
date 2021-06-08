@@ -33,7 +33,7 @@ class ReservationApiController extends Controller
 
         $reservationInformation = ReservationService::reservationInformation();
 
-        if (! array_key_exists($request->branch, $reservationInformation)) {
+        if (!array_key_exists($request->branch, $reservationInformation)) {
             abort(404);
         }
 
@@ -53,7 +53,7 @@ class ReservationApiController extends Controller
 
         $reservationInformationMonth = ReservationService::reservationInformationMonth($request->branch, $request->service_type, $request->year, $request->month);
 
-        if (! array_key_exists($request->branch, $reservationInformationMonth)) {
+        if (!array_key_exists($request->branch, $reservationInformationMonth)) {
             abort(404);
         }
 
@@ -81,7 +81,7 @@ class ReservationApiController extends Controller
             $month = $date->format('m');
             $reservationInformationMonth = ReservationService::reservationInformationMonth($request->branch, $request->service_type, $year, $month);
 
-            if (! array_key_exists($request->branch, $reservationInformationMonth)) {
+            if (!array_key_exists($request->branch, $reservationInformationMonth)) {
                 abort(404);
             }
 
@@ -107,7 +107,15 @@ class ReservationApiController extends Controller
 
         $reservationInformationMonth = ReservationService::reservationInformationFiltered($request->branch, $request->service_type, $request->date);
 
+        if (
+            !array_key_exists($request->branch, $reservationInformationMonth) ||
+            !array_key_exists($request->service_type, $reservationInformationMonth[$request->branch])
+        ) {
+            abort(404);
+        }
+
         $times = $reservationInformationMonth[$request->branch][$request->service_type];
+
         $times['available'] = [];
         foreach ($times['reservation_times'] as $reservationTime) {
             $available = true;
@@ -115,7 +123,6 @@ class ReservationApiController extends Controller
             foreach ($times['not_available_datetimes'] as $notAvailableTime) {
                 if (str_contains($notAvailableTime, $reservationTime)) {
                     $available = false;
-
                     break;
                 }
             }
