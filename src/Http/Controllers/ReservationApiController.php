@@ -3,14 +3,13 @@
 namespace Reddot\TegetaReservation\Http\Controllers;
 
 use DateTime;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Reddot\TegetaReservation\Facades\ReservationService;
 
 class ReservationApiController extends Controller
 {
-
     public function branches(Request $request): JsonResponse
     {
         $reservationInformation = ReservationService::reservationInformation();
@@ -57,7 +56,7 @@ class ReservationApiController extends Controller
             'service_type' => 'required',
             'year' => 'required',
             'month' => 'required',
-            'n' => 'required'
+            'n' => 'required',
         ]);
         $date = DateTime::createFromFormat('m-Y', $request->month . '-' . $request->year);
         $resultAvailable = [];
@@ -75,7 +74,7 @@ class ReservationApiController extends Controller
 
         return response()->json([
             'available' => array_values(array_unique(Arr::flatten($resultAvailable))),
-            'not_available' => array_values(array_unique(Arr::flatten($resultNotAvailable)))
+            'not_available' => array_values(array_unique(Arr::flatten($resultNotAvailable))),
         ]);
     }
 
@@ -97,6 +96,7 @@ class ReservationApiController extends Controller
             foreach ($times['not_available_datetimes'] as $notAvailableTime) {
                 if (str_contains($notAvailableTime, $reservationTime)) {
                     $available = false;
+
                     break;
                 }
             }
