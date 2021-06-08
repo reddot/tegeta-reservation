@@ -109,5 +109,4 @@ class TegetaReservationApiControllerTest extends TestCase
             ->assertStatus(422)
             ->assertJsonValidationErrors(['branch', 'service_type', 'year', 'month', 'n']);
     }
-    
 }
