@@ -124,7 +124,7 @@ class TegetaReservationApiControllerTest extends TestCase
                     'reservation_times' => [],
                     'not_available_datetimes' => [],
                     'available' => [],
-                ]
+                ],
             ]);
 
         // 404: Not Found
