@@ -3,9 +3,9 @@
 namespace Reddot\TegetaReservation\Tests;
 
 use Carbon\Carbon;
-use Reddot\TegetaReservation\Facades\ReservationService;
+use Reddot\TegetaReservation\Facades\ReservationServiceApi;
 
-class TegetaReservationTest extends TestCase
+class TegetaReservationApiTest extends TestCase
 {
     /** @test */
     public function test_config()
@@ -23,7 +23,7 @@ class TegetaReservationTest extends TestCase
     /** @test */
     public function test_api_1_reservation_information()
     {
-        $reservationInformation = ReservationService::reservationInformation();
+        $reservationInformation = ReservationServiceApi::reservationInformation();
 
         $this->assertIsArray($reservationInformation);
     }
@@ -31,7 +31,7 @@ class TegetaReservationTest extends TestCase
     /** @test */
     public function test_api_2_reservation_information()
     {
-        $reservationInformation = ReservationService::reservationInformationFiltered('ცენტრალური', 'სავალი ნაწილი', (Carbon::tomorrow()->format('Y-m-d')));
+        $reservationInformation = ReservationServiceApi::reservationInformationFiltered('ცენტრალური', 'სავალი ნაწილი', (Carbon::tomorrow()->format('Y-m-d')));
 
         $this->assertIsArray($reservationInformation);
         $this->assertArrayHasKey('ცენტრალური', $reservationInformation);
@@ -47,7 +47,7 @@ class TegetaReservationTest extends TestCase
     /** @test */
     public function test_api_3_reservation_information_month()
     {
-        $reservationInformationMonth = ReservationService::reservationInformationMonth('ცენტრალური', 'სავალი ნაწილი', Carbon::tomorrow()->format('Y'), Carbon::tomorrow()->format('m'));
+        $reservationInformationMonth = ReservationServiceApi::reservationInformationMonth('ცენტრალური', 'სავალი ნაწილი', Carbon::tomorrow()->format('Y'), Carbon::tomorrow()->format('m'));
 
         $this->assertIsArray($reservationInformationMonth);
         $this->assertArrayHasKey('ცენტრალური', $reservationInformationMonth);

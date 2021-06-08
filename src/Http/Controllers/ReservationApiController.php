@@ -6,7 +6,7 @@ use DateTime;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Reddot\TegetaReservation\Facades\ReservationService;
+use Reddot\TegetaReservation\Facades\ReservationServiceApi;
 use Reddot\TegetaReservation\Http\Middleware\ForceJsonResponse;
 
 class ReservationApiController extends Controller
@@ -18,7 +18,7 @@ class ReservationApiController extends Controller
 
     public function branches(Request $request): JsonResponse
     {
-        $reservationInformation = ReservationService::reservationInformation();
+        $reservationInformation = ReservationServiceApi::reservationInformation();
 
         return response()->json([
             'branches' => $reservationInformation,
@@ -31,7 +31,7 @@ class ReservationApiController extends Controller
             'branch' => 'required',
         ]);
 
-        $reservationInformation = ReservationService::reservationInformation();
+        $reservationInformation = ReservationServiceApi::reservationInformation();
 
         if (! array_key_exists($request->branch, $reservationInformation)) {
             abort(404);
@@ -51,7 +51,7 @@ class ReservationApiController extends Controller
             'month' => 'required',
         ]);
 
-        $reservationInformationMonth = ReservationService::reservationInformationMonth($request->branch, $request->service_type, $request->year, $request->month);
+        $reservationInformationMonth = ReservationServiceApi::reservationInformationMonth($request->branch, $request->service_type, $request->year, $request->month);
 
         if (! array_key_exists($request->branch, $reservationInformationMonth)) {
             abort(404);
@@ -79,7 +79,7 @@ class ReservationApiController extends Controller
         for ($i = 0; $i < $request->n; $i++) {
             $year = $date->format('Y');
             $month = $date->format('m');
-            $reservationInformationMonth = ReservationService::reservationInformationMonth($request->branch, $request->service_type, $year, $month);
+            $reservationInformationMonth = ReservationServiceApi::reservationInformationMonth($request->branch, $request->service_type, $year, $month);
 
             if (! array_key_exists($request->branch, $reservationInformationMonth)) {
                 abort(404);
@@ -105,7 +105,7 @@ class ReservationApiController extends Controller
             'date' => 'required',
         ]);
 
-        $reservationInformationMonth = ReservationService::reservationInformationFiltered($request->branch, $request->service_type, $request->date);
+        $reservationInformationMonth = ReservationServiceApi::reservationInformationFiltered($request->branch, $request->service_type, $request->date);
 
         if (
             ! array_key_exists($request->branch, $reservationInformationMonth) ||
@@ -151,7 +151,7 @@ class ReservationApiController extends Controller
             'phone' => 'required',
         ]);
 
-        $reserveResult = ReservationService::reserve(
+        $reserveResult = ReservationServiceApi::reserve(
             $request->plate_number,
             $request->car_type,
             $request->user_type,
