@@ -7,9 +7,15 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Reddot\TegetaReservation\Facades\ReservationService;
+use Reddot\TegetaReservation\Http\Middleware\ForceJsonResponse;
 
 class ReservationApiController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(ForceJsonResponse::class);
+    }
+
     public function branches(Request $request): JsonResponse
     {
         $reservationInformation = ReservationService::reservationInformation();
@@ -26,6 +32,10 @@ class ReservationApiController extends Controller
         ]);
 
         $reservationInformation = ReservationService::reservationInformation();
+
+        if (!array_key_exists($request->branch, $reservationInformation)) {
+            abort(404);
+        }
 
         return response()->json([
             'services' => $reservationInformation[$request->branch],
