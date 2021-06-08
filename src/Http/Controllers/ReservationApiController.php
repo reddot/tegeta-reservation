@@ -33,7 +33,7 @@ class ReservationApiController extends Controller
 
         $reservationInformation = ReservationService::reservationInformation();
 
-        if (!array_key_exists($request->branch, $reservationInformation)) {
+        if (! array_key_exists($request->branch, $reservationInformation)) {
             abort(404);
         }
 
