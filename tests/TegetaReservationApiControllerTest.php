@@ -40,7 +40,7 @@ class TegetaReservationApiControllerTest extends TestCase
             ->assertStatus(404)
             ->assertNotFound();
 
-        // 422: Branch is required
+        // 422: ['branch'] is required
         $this->get(route('reservation.api.services'))
             ->assertStatus(422)
             ->assertJsonValidationErrors(['branch']);
@@ -71,7 +71,7 @@ class TegetaReservationApiControllerTest extends TestCase
             ->assertStatus(404)
             ->assertNotFound();
 
-        // 422: Branch is required
+        // 422: ['branch', 'service_type', 'year', 'month'] is required
         $this->get(route('reservation.api.dates'))
             ->assertStatus(422)
             ->assertJsonValidationErrors(['branch', 'service_type', 'year', 'month']);
@@ -104,7 +104,7 @@ class TegetaReservationApiControllerTest extends TestCase
             ->assertStatus(404)
             ->assertNotFound();
 
-        // 422: Branch is required
+        // 422: ['branch', 'service_type', 'year', 'month', 'n'] is required
         $this->get(route('reservation.api.dates-n-month'))
             ->assertStatus(422)
             ->assertJsonValidationErrors(['branch', 'service_type', 'year', 'month', 'n']);
@@ -145,7 +145,7 @@ class TegetaReservationApiControllerTest extends TestCase
             ->assertStatus(404)
             ->assertNotFound();
 
-        // 422: Branch is required
+        // 422: ['branch', 'service_type', 'date'] is required
         $this->get(route('reservation.api.times'))
             ->assertStatus(422)
             ->assertJsonValidationErrors(['branch', 'service_type', 'date']);
