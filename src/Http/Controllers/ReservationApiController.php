@@ -2,10 +2,7 @@
 
 namespace Reddot\TegetaReservation\Http\Controllers;
 
-use DateTime;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Reddot\TegetaReservation\Facades\ReservationService;
 use Reddot\TegetaReservation\Facades\ReservationServiceApi;
 use Reddot\TegetaReservation\Http\Middleware\ForceJsonResponse;
@@ -69,7 +66,6 @@ class ReservationApiController extends Controller
 
     public function reserve(ReserveRequest $request): JsonResponse
     {
-
         $reserveResult = ReservationService::storeReservationFromRequest($request);
 
         return response()->json($reserveResult);
