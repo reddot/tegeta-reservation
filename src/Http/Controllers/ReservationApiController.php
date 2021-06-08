@@ -33,7 +33,7 @@ class ReservationApiController extends Controller
 
         $reservationInformation = ReservationService::reservationInformation();
 
-        if (! array_key_exists($request->branch, $reservationInformation)) {
+        if (!array_key_exists($request->branch, $reservationInformation)) {
             abort(404);
         }
 
@@ -52,8 +52,8 @@ class ReservationApiController extends Controller
         ]);
 
         $reservationInformationMonth = ReservationService::reservationInformationMonth($request->branch, $request->service_type, $request->year, $request->month);
-        
-        if (! array_key_exists($request->branch, $reservationInformationMonth)) {
+
+        if (!array_key_exists($request->branch, $reservationInformationMonth)) {
             abort(404);
         }
 
@@ -80,6 +80,11 @@ class ReservationApiController extends Controller
             $year = $date->format('Y');
             $month = $date->format('m');
             $reservationInformationMonth = ReservationService::reservationInformationMonth($request->branch, $request->service_type, $year, $month);
+
+            if (!array_key_exists($request->branch, $reservationInformationMonth)) {
+                abort(404);
+            }
+
             array_push($resultAvailable, array_map(fn ($d) => date_format(date_create($d), "m/d/Y"), $reservationInformationMonth[$request->branch]['available_datetimes']));
             array_push($resultNotAvailable, array_map(fn ($d) => date_format(date_create($d), "m/d/Y"), $reservationInformationMonth[$request->branch]['not_available_datetimes']));
 
