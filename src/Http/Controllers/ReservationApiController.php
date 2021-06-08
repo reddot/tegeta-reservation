@@ -52,6 +52,10 @@ class ReservationApiController extends Controller
         ]);
 
         $reservationInformationMonth = ReservationService::reservationInformationMonth($request->branch, $request->service_type, $request->year, $request->month);
+        
+        if (! array_key_exists($request->branch, $reservationInformationMonth)) {
+            abort(404);
+        }
 
         return response()->json([
             'available' => array_map(fn ($d) => date_format(date_create($d), "m/d/Y"), $reservationInformationMonth[$request->branch]['available_datetimes']),
