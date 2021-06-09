@@ -40,8 +40,8 @@ class ReservationService
         }
 
         return [
-            'available' => array_map(fn ($d) => date_format(date_create($d), "m/d/Y"), $reservationInformationMonth[$branch]['available_datetimes']),
-            'not_available' => array_map(fn ($d) => date_format(date_create($d), "m/d/Y"), $reservationInformationMonth[$branch]['not_available_datetimes']),
+            'available' => array_map(fn ($d) => date_format(date_create($d), "Y-m-d"), $reservationInformationMonth[$branch]['available_datetimes']),
+            'not_available' => array_map(fn ($d) => date_format(date_create($d), "Y-m-d"), $reservationInformationMonth[$branch]['not_available_datetimes']),
         ];
     }
 
