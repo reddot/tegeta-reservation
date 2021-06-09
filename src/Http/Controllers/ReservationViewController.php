@@ -5,7 +5,6 @@ namespace Reddot\TegetaReservation\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Reddot\TegetaReservation\Facades\ReservationService;
-use Reddot\TegetaReservation\Facades\ReservationServiceApi;
 use Reddot\TegetaReservation\Http\Middleware\ForceJsonResponse;
 use Reddot\TegetaReservation\Http\Requests\DatesNMonthRequest;
 use Reddot\TegetaReservation\Http\Requests\DatesRequest;

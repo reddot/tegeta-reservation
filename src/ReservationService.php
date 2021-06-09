@@ -24,7 +24,7 @@ class ReservationService
     {
         $reservationInformation = ReservationServiceApi::reservationInformation();
 
-        if (!array_key_exists($branch, $reservationInformation)) {
+        if (! array_key_exists($branch, $reservationInformation)) {
             abort(404);
         }
 
@@ -35,7 +35,7 @@ class ReservationService
     {
         $reservationInformationMonth = ReservationServiceApi::reservationInformationMonth($branch, $service_type, $year, $month);
 
-        if (!array_key_exists($branch, $reservationInformationMonth)) {
+        if (! array_key_exists($branch, $reservationInformationMonth)) {
             abort(404);
         }
 
@@ -73,8 +73,8 @@ class ReservationService
         $reservationInformationMonth = ReservationServiceApi::reservationInformationFiltered($branch, $service_type, $date);
 
         if (
-            !array_key_exists($branch, $reservationInformationMonth) ||
-            !array_key_exists($service_type, $reservationInformationMonth[$branch])
+            ! array_key_exists($branch, $reservationInformationMonth) ||
+            ! array_key_exists($service_type, $reservationInformationMonth[$branch])
         ) {
             abort(404);
         }
