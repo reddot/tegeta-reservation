@@ -23,8 +23,12 @@ class ReservationServiceApi
      *      code - რეზერვაციის ჯგუფის კოდი
      *      vehicle_type  - light(მსუბუქი), truck(სატვირთო), van(მიკროავტობუსი)
      */
-    public function reservationInformation(string $code = "001", ?string $vehicleType = null): ?array
+    public function reservationInformation(?string $code = null, ?string $vehicleType = null): ?array
     {
+        if (!$code) {
+            $code = config('tegeta-reservation.code');
+        }
+
         return $this->sendPostRequest('/api/reservation_information', [
             'code' => $code,
         ]);
