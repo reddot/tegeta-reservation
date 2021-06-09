@@ -12,13 +12,7 @@ class TegetaReservationApiControllerTest extends TestCase
         // 200: Ok
         $this->get(route('reservation.api.branches'))
             ->assertJsonStructure([
-                'branches' => [
-                    '*' => [ // Branch Name
-                        '*' => [ // Service Name
-                            'time_per_slot',
-                        ],
-                    ],
-                ],
+                'branches'
             ]);
     }
 

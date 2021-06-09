@@ -21,10 +21,8 @@ class ReservationApiController extends Controller
 
     public function branches(): JsonResponse
     {
-        $reservationInformation = ReservationServiceApi::reservationInformation();
-
         return response()->json([
-            'branches' => $reservationInformation,
+            'branches' => ReservationService::getBranches(),
         ]);
     }
 

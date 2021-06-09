@@ -23,7 +23,7 @@ class ReservationViewController extends Controller
     public function branches(): JsonResponse
     {
         return response()->json([
-            'view' => view('tegeta-reservation::branches', ['branches' => ReservationServiceApi::reservationInformation()])->render(),
+            'view' => view('tegeta-reservation::branches', ['branches' => ReservationService::getBranches()])->render(),
         ]);
     }
 
