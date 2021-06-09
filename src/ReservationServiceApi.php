@@ -25,7 +25,7 @@ class ReservationServiceApi
      */
     public function reservationInformation(?string $code = null, ?string $vehicleType = null): ?array
     {
-        if (!$code) {
+        if (! $code) {
             $code = config('tegeta-reservation.code');
         }
 
