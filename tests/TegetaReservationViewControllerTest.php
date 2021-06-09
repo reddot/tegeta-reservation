@@ -12,7 +12,7 @@ class TegetaReservationViewControllerTest extends TestCase
         // 200: Ok
         $this->get(route('reservation.view.branches'))
             ->assertJsonStructure([
-                'view'
+                'view',
             ]);
     }
 
@@ -22,7 +22,7 @@ class TegetaReservationViewControllerTest extends TestCase
         // 200: Ok
         $this->get(route('reservation.view.services', ['branch' => 'ცენტრალური']))
             ->assertJsonStructure([
-                'view'
+                'view',
             ]);
     }
 
