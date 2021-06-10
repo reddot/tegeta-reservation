@@ -18,7 +18,7 @@ class TegetaReservationServiceProvider extends PackageServiceProvider
             ->name('tegeta-reservation')
             ->hasConfigFile()
             ->hasTranslations()
-            // ->hasRoute('web')
+            ->hasRoute('web')
             ->hasViews();
     }
 

@@ -76,7 +76,7 @@ class ReservationServiceApi
      *      {result : 2} - მოცემული მანქანის ნომრით ამ დროს უკვე რეზერვირებულია
      *      {result : 3} - რეზერვაცია შეუძლებელია (არასწორი დრო ან მოცემულ დროს რეზერვაციისთვის განკუთვნილი ბოქსების და რეზერვაციის ჩანაწერების რაოდენობები ტოლია)
      */
-    public function reserve(string $stateNumber, string $vehicleType, ?string $userType, ?string $IDNumber, ?string $companyID, ?string $branch, ?string $serviceType, ?string $date, ?string $time, ?string $phoneNumber): ?array
+    public function reserve(string $stateNumber, string $vehicleType, ?string $userType, ?string $IDNumber, ?string $companyID, ?string $branch, ?string $serviceType, ?string $date, ?string $time, ?string $phone): ?array
     {
         $data = [
             'state_number' => $stateNumber,
@@ -85,7 +85,7 @@ class ReservationServiceApi
             'service_type' => $serviceType,
             'date' => $date,
             'time' => $time,
-            'phone' => $phoneNumber,
+            'phone' => $phone,
         ];
 
         if ($vehicleType != 'light') {
