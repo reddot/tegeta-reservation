@@ -3,6 +3,11 @@
 namespace Reddot\TegetaReservation;
 
 use DateTime;
+
+use Illuminate\Support\Facades\Route;
+use Reddot\TegetaReservation\Http\Controllers\ReservationApiController;
+use Reddot\TegetaReservation\Http\Controllers\ReservationViewController;
+
 use Illuminate\Support\Arr;
 use Reddot\TegetaReservation\Facades\ReservationServiceApi;
 use Reddot\TegetaReservation\Http\Requests\DatesNMonthRequest;
@@ -13,6 +18,29 @@ use Reddot\TegetaReservation\Http\Requests\TimesRequest;
 
 class ReservationService
 {
+    public function routes()
+    {
+        return
+            Route::name('reservation.')->prefix('reservation')->group(function () {
+                Route::name('api.')->prefix('api')->group(function () {
+                    Route::get('/branches', [ReservationApiController::class, 'branches'])->name('branches');
+                    Route::get('/services', [ReservationApiController::class, 'services'])->name('services');
+                    Route::get('/dates', [ReservationApiController::class, 'dates'])->name('dates');
+                    Route::get('/dates-n-month', [ReservationApiController::class, 'datesNMonth'])->name('dates-n-month');
+                    Route::get('/times', [ReservationApiController::class, 'times'])->name('times');
+                    Route::post('/reserve', [ReservationApiController::class, 'reserve'])->name('reserve');
+                });
+                Route::name('view.')->prefix('view')->group(function () {
+                    Route::get('/branches', [ReservationViewController::class, 'branches'])->name('branches');
+                    Route::get('/services', [ReservationViewController::class, 'services'])->name('services');
+                    Route::get('/dates', [ReservationViewController::class, 'dates'])->name('dates');
+                    Route::get('/dates-n-month', [ReservationViewController::class, 'datesNMonth'])->name('dates-n-month');
+                    Route::get('/times', [ReservationViewController::class, 'times'])->name('times');
+                    Route::post('/reserve', [ReservationViewController::class, 'reserve'])->name('reserve');
+                });
+            });
+    }
+
     public function getBranches()
     {
         $branches = array_keys(ReservationServiceApi::reservationInformation());
@@ -24,7 +52,7 @@ class ReservationService
     {
         $reservationInformation = ReservationServiceApi::reservationInformation();
 
-        if (! array_key_exists($branch, $reservationInformation)) {
+        if (!array_key_exists($branch, $reservationInformation)) {
             abort(404);
         }
 
@@ -35,7 +63,7 @@ class ReservationService
     {
         $reservationInformationMonth = ReservationServiceApi::reservationInformationMonth($branch, $service_type, $year, $month);
 
-        if (! array_key_exists($branch, $reservationInformationMonth)) {
+        if (!array_key_exists($branch, $reservationInformationMonth)) {
             abort(404);
         }
 
@@ -73,8 +101,8 @@ class ReservationService
         $reservationInformationMonth = ReservationServiceApi::reservationInformationFiltered($branch, $service_type, $date);
 
         if (
-            ! array_key_exists($branch, $reservationInformationMonth) ||
-            ! array_key_exists($service_type, $reservationInformationMonth[$branch])
+            !array_key_exists($branch, $reservationInformationMonth) ||
+            !array_key_exists($service_type, $reservationInformationMonth[$branch])
         ) {
             abort(404);
         }
