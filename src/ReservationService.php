@@ -4,12 +4,12 @@ namespace Reddot\TegetaReservation;
 
 use DateTime;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
+use Reddot\TegetaReservation\Facades\ReservationServiceApi;
+
 use Reddot\TegetaReservation\Http\Controllers\ReservationApiController;
 use Reddot\TegetaReservation\Http\Controllers\ReservationViewController;
-
-use Illuminate\Support\Arr;
-use Reddot\TegetaReservation\Facades\ReservationServiceApi;
 use Reddot\TegetaReservation\Http\Requests\DatesNMonthRequest;
 use Reddot\TegetaReservation\Http\Requests\DatesRequest;
 use Reddot\TegetaReservation\Http\Requests\ReserveRequest;
@@ -52,7 +52,7 @@ class ReservationService
     {
         $reservationInformation = ReservationServiceApi::reservationInformation();
 
-        if (!array_key_exists($branch, $reservationInformation)) {
+        if (! array_key_exists($branch, $reservationInformation)) {
             abort(404);
         }
 
@@ -63,7 +63,7 @@ class ReservationService
     {
         $reservationInformationMonth = ReservationServiceApi::reservationInformationMonth($branch, $service_type, $year, $month);
 
-        if (!array_key_exists($branch, $reservationInformationMonth)) {
+        if (! array_key_exists($branch, $reservationInformationMonth)) {
             abort(404);
         }
 
@@ -101,8 +101,8 @@ class ReservationService
         $reservationInformationMonth = ReservationServiceApi::reservationInformationFiltered($branch, $service_type, $date);
 
         if (
-            !array_key_exists($branch, $reservationInformationMonth) ||
-            !array_key_exists($service_type, $reservationInformationMonth[$branch])
+            ! array_key_exists($branch, $reservationInformationMonth) ||
+            ! array_key_exists($service_type, $reservationInformationMonth[$branch])
         ) {
             abort(404);
         }
