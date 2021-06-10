@@ -1,9 +1,11 @@
 # Publish Files
 
--   config:
+-   Config:
     `php artisan vendor:publish --tag=tegeta-reservation-config`
--   views:
+-   Views:
     `php artisan vendor:publish --tag=tegeta-reservation-views`
+-   Translations:
+    `php artisan vendor:publish --tag=tegeta-reservation-translations`
 
 # Routes:
 | Method   | url                           | Controller                                                                      |
