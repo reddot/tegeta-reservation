@@ -24,8 +24,8 @@ class ReserveRequest extends FormRequest
     public function rules()
     {
         return [
-            'plate_number' => 'required',
-            'car_type' => 'required',
+            'state_number' => 'required',
+            'vehicle_type' => 'required',
             'user_type' => 'required',
             'branch' => 'required',
             'service' => 'required',
