@@ -4,7 +4,6 @@ namespace Reddot\TegetaReservation;
 
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Reddot\TegetaReservation\Facades\ReservationService;
 
 class ReservationServiceApi
 {
@@ -175,6 +174,7 @@ class ReservationServiceApi
         try {
             Log::info(json_encode($log, JSON_UNESCAPED_UNICODE));
             Log::info(json_encode($request->json(), JSON_UNESCAPED_UNICODE));
+
             return $request->json();
         } catch (\Throwable $th) {
             return null;
