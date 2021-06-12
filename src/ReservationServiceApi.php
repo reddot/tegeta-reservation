@@ -174,6 +174,7 @@ class ReservationServiceApi
             ];
             // Log::useFiles(ReservationService::getLogFileName());
             Log::info(json_encode($log));
+
             return $request->json();
         } catch (\Throwable $th) {
             return null;
