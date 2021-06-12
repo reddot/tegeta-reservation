@@ -31,7 +31,7 @@ class TegetaReservationApiTest extends TestCase
     /** @test */
     public function test_api_2_reservation_information()
     {
-        $reservationInformation = ReservationServiceApi::reservationInformationFiltered('ცენტრალური', 'სავალი ნაწილი', (Carbon::tomorrow()->format('Y-m-d')));
+        $reservationInformation = ReservationServiceApi::reservationInformationFiltered('ცენტრალური', 'სავალი ნაწილი', (Carbon::tomorrow()->startOfWeek()->addWeek()->format('Y-m-d')));
 
         $this->assertIsArray($reservationInformation);
         $this->assertArrayHasKey('ცენტრალური', $reservationInformation);
@@ -47,7 +47,8 @@ class TegetaReservationApiTest extends TestCase
     /** @test */
     public function test_api_3_reservation_information_month()
     {
-        $reservationInformationMonth = ReservationServiceApi::reservationInformationMonth('ცენტრალური', 'სავალი ნაწილი', Carbon::tomorrow()->format('Y'), Carbon::tomorrow()->format('m'));
+        $date = Carbon::tomorrow()->startOfWeek()->addWeek();
+        $reservationInformationMonth = ReservationServiceApi::reservationInformationMonth('ცენტრალური', 'სავალი ნაწილი', $date->format('Y'), $date->format('m'));
 
         $this->assertIsArray($reservationInformationMonth);
         $this->assertArrayHasKey('ცენტრალური', $reservationInformationMonth);
