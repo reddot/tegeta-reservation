@@ -43,6 +43,11 @@ class ReservationService
     }
 
     /** Configs */
+    public function getLogFileName()
+    {
+        return config('tegeta-reservation.log');
+    }
+
     public function getApiRoute()
     {
         return config('tegeta-reservation.url');

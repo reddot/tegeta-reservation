@@ -3,6 +3,8 @@
 namespace Reddot\TegetaReservation;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Reddot\TegetaReservation\Facades\ReservationService;
 
 class ReservationServiceApi
 {
@@ -162,7 +164,17 @@ class ReservationServiceApi
         $this->url = preg_replace('/([^:])(\/{2,})/', '$1/', $this->url);
 
         try {
-            return Http::asForm()->post($this->url, $data)->json();
+            $request = Http::asForm()->post($this->url, $data);
+
+            $log = [
+                'URL' => $this->url,
+                'METHOD' => 'POST',
+                'REQUEST_BODY' => $data,
+                'RESPONSE' => $request->getStatusCode(),
+            ];
+            // Log::useFiles(ReservationService::getLogFileName());
+            Log::info(json_encode($log));
+            return $request->json();
         } catch (\Throwable $th) {
             return null;
         }
