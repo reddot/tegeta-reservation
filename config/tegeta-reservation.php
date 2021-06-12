@@ -21,7 +21,7 @@ return [
         ['input_name' => 'van', 'view_name' => 'მიკროავტობუსი'],
     ],
 
-    'user_type' => [
+    'user_types' => [
         ['input_name' => 'person', 'view_name' => 'ფიზიკური პირი'],
         ['input_name' => 'company', 'view_name' => 'იურიდიული პირი'],
     ]

@@ -18,6 +18,7 @@ use Reddot\TegetaReservation\Http\Requests\TimesRequest;
 
 class ReservationService
 {
+    /** Routes */
     public function routes()
     {
         return
@@ -41,6 +42,23 @@ class ReservationService
             });
     }
 
+    /** Configs */
+    public function getApiRoute()
+    {
+        return config('tegeta-reservation.url');
+    }
+
+    public function getVehicleTypes()
+    {
+        return config('tegeta-reservation.vehicle_types') ?? [];
+    }
+
+    public function getUserTypes()
+    {
+        return config('tegeta-reservation.user_types') ?? [];
+    }
+
+    /** Gettind resources from arguments */
     public function getBranches()
     {
         $branches = array_keys(ReservationServiceApi::reservationInformation());
@@ -52,7 +70,7 @@ class ReservationService
     {
         $reservationInformation = ReservationServiceApi::reservationInformation();
 
-        if (! array_key_exists($branch, $reservationInformation)) {
+        if (!array_key_exists($branch, $reservationInformation)) {
             abort(404);
         }
 
@@ -63,7 +81,7 @@ class ReservationService
     {
         $reservationInformationMonth = ReservationServiceApi::reservationInformationMonth($branch, $service_type, $year, $month);
 
-        if (! array_key_exists($branch, $reservationInformationMonth)) {
+        if (!array_key_exists($branch, $reservationInformationMonth)) {
             abort(404);
         }
 
@@ -101,8 +119,8 @@ class ReservationService
         $reservationInformationMonth = ReservationServiceApi::reservationInformationFiltered($branch, $service_type, $date);
 
         if (
-            ! array_key_exists($branch, $reservationInformationMonth) ||
-            ! array_key_exists($service_type, $reservationInformationMonth[$branch])
+            !array_key_exists($branch, $reservationInformationMonth) ||
+            !array_key_exists($service_type, $reservationInformationMonth[$branch])
         ) {
             abort(404);
         }
