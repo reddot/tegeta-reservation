@@ -163,18 +163,18 @@ class ReservationServiceApi
         $this->url = $this->baseUrl . $path;
         $this->url = preg_replace('/([^:])(\/{2,})/', '$1/', $this->url);
 
+        $request = Http::asForm()->post($this->url, $data);
+
+        $log = [
+            'URL' => $this->url,
+            'METHOD' => 'POST',
+            'REQUEST_BODY' => $data,
+            'RESPONSE' => $request->getStatusCode(),
+        ];
+
         try {
-            $request = Http::asForm()->post($this->url, $data);
-
-            $log = [
-                'URL' => $this->url,
-                'METHOD' => 'POST',
-                'REQUEST_BODY' => $data,
-                'RESPONSE' => $request->getStatusCode(),
-            ];
-            // Log::useFiles(ReservationService::getLogFileName());
-            Log::info(json_encode($log));
-
+            Log::info(json_encode($log, JSON_UNESCAPED_UNICODE));
+            Log::info(json_encode($request->json(), JSON_UNESCAPED_UNICODE));
             return $request->json();
         } catch (\Throwable $th) {
             return null;
