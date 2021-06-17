@@ -28,6 +28,7 @@ class ReserveRequest extends FormRequest
             'state_number' => ['required'],
             'vehicle_type' => ['required', 'in:' . implode(",", ReservationService::getVehicleTypeInputNames())],
             'user_type' => ['required', 'in:' . implode(",", ReservationService::getUserTypeInputNames())],
+            'company_id' => ['required_if:user_type,company'],
             'branch' => ['required'],
             'service_type' => ['required'],
             'date' => ['required'],
