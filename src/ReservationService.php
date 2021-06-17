@@ -152,9 +152,9 @@ class ReservationService
         return $times;
     }
 
-    public function storeReservation($stateNumber, $vehicleType, $userType, $IDNumber, $companyID, $branch, $service, $date, $time, $phone)
+    public function storeReservation($stateNumber, $vehicleType, $userType, $IDNumber, $companyID, $branch, $serviceType, $date, $time, $phone)
     {
-        return ReservationServiceApi::reserve($stateNumber, $vehicleType, $userType, $IDNumber, $companyID, $branch, $service, $date, $time, $phone);
+        return ReservationServiceApi::reserve($stateNumber, $vehicleType, $userType, $IDNumber, $companyID, $branch, $serviceType, $date, $time, $phone);
     }
 
     /** Getting resources from request */
@@ -180,6 +180,6 @@ class ReservationService
 
     public function storeReservationFromRequest(ReserveRequest $r)
     {
-        return $this->storeReservation($r->state_number, $r->vehicle_type, $r->user_type, $r->IDNumber, $r->company_id, $r->branch, $r->service, $r->date, $r->time, $r->phone);
+        return $this->storeReservation($r->state_number, $r->vehicle_type, $r->user_type, $r->IDNumber, $r->company_id, $r->branch, $r->service_type, $r->date, $r->time, $r->phone);
     }
 }

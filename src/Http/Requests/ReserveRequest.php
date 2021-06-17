@@ -28,7 +28,7 @@ class ReserveRequest extends FormRequest
             'vehicle_type' => 'required',
             'user_type' => 'required',
             'branch' => 'required',
-            'service' => 'required',
+            'service_type' => 'required',
             'date' => 'required',
             'time' => 'required',
             'phone' => 'required',
