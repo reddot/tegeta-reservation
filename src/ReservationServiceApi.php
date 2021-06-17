@@ -5,6 +5,8 @@ namespace Reddot\TegetaReservation;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
+use function PHPUnit\Framework\isNull;
+
 class ReservationServiceApi
 {
     private string $baseUrl;
@@ -26,7 +28,7 @@ class ReservationServiceApi
      */
     public function reservationInformation(?string $code = null, ?string $vehicleType = null): ?array
     {
-        if (! $code) {
+        if (!$code) {
             $code = config('tegeta-reservation.code');
         }
 
@@ -77,8 +79,11 @@ class ReservationServiceApi
      *      {result : 2} - მოცემული მანქანის ნომრით ამ დროს უკვე რეზერვირებულია
      *      {result : 3} - რეზერვაცია შეუძლებელია (არასწორი დრო ან მოცემულ დროს რეზერვაციისთვის განკუთვნილი ბოქსების და რეზერვაციის ჩანაწერების რაოდენობები ტოლია)
      */
-    public function reserve(string $stateNumber, string $vehicleType, ?string $userType, ?string $IDNumber, ?string $companyID, ?string $branch, ?string $serviceType, ?string $date, ?string $time, ?string $phone): ?array
+    public function reserve(string $stateNumber, string $vehicleType, string $userType, ?string $IDNumber, ?string $companyID, string $branch, string $serviceType, string $date, string $time, ?string $phone): ?array
     {
+        assert(in_array($userType, ['person', 'company']));
+        assert(in_array($vehicleType, ['light', 'truck', 'van']));
+
         $data = [
             'state_number' => $stateNumber,
             'vehicle_type' => $vehicleType,
@@ -92,7 +97,7 @@ class ReservationServiceApi
         if ($vehicleType != 'light') {
             $data['user_type'] = $userType;
             if ($userType == 'company') {
-                $data['Company ID'] = $companyID;
+                $data['company_id'] = $companyID;
             }
         }
 
