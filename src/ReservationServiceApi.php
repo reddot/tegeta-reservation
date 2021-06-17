@@ -5,8 +5,6 @@ namespace Reddot\TegetaReservation;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
-use function PHPUnit\Framework\isNull;
-
 class ReservationServiceApi
 {
     private string $baseUrl;
@@ -28,7 +26,7 @@ class ReservationServiceApi
      */
     public function reservationInformation(?string $code = null, ?string $vehicleType = null): ?array
     {
-        if (!$code) {
+        if (! $code) {
             $code = config('tegeta-reservation.code');
         }
 
