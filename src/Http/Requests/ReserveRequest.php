@@ -3,6 +3,7 @@
 namespace Reddot\TegetaReservation\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Reddot\TegetaReservation\Facades\ReservationService;
 
 class ReserveRequest extends FormRequest
 {
@@ -24,14 +25,14 @@ class ReserveRequest extends FormRequest
     public function rules()
     {
         return [
-            'state_number' => 'required',
-            'vehicle_type' => 'required',
-            'user_type' => 'required',
-            'branch' => 'required',
-            'service_type' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-            'phone' => 'required',
+            'state_number' => ['required'],
+            'vehicle_type' => ['required'],
+            'user_type' => ['required', 'in:' . implode(ReservationService::getVehicleTypeInputNames())],
+            'branch' => ['required'],
+            'service_type' => ['required', 'in:' . implode(ReservationService::getVehicleTypeInputNames())],
+            'date' => ['required'],
+            'time' => ['required'],
+            'phone' => ['required'],
         ];
     }
 }
