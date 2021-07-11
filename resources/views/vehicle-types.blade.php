@@ -1,4 +1,4 @@
-<select name="vehicle_type" class="form-select">
+<select name="vehicle_type" class="form-select" required>
     <option value="" selected disabled>@lang('აირჩიეთ ავტომობილის ტიპი')</option>
     @foreach (ReservationService::getVehicleTypes() as $item)
         <option value="{{ $item['input_name'] }}"
