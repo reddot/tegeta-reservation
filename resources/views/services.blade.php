@@ -4,6 +4,6 @@
 <select name="service_type" class="form-select">
     <option value="" selected>@lang('აირჩიეთ სერვისი')</option>
     @foreach ($services as $key => $value)
-    <option value="{{ $key }}">{{ $key }}</option>
+        <option value="{{ $key }}" @if (old('service_type') == $key) selected @endif>{{ $key }}</option>
     @endforeach
 </select>

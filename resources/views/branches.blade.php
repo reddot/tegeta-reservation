@@ -1,9 +1,9 @@
 {{-- Available Variables: 
     $branches <- [array]
 --}}
-<select name="branches" class="form-select">
+<select name="branch" class="form-select">
     <option value="" selected>@lang('აირჩიეთ ფილიალი')</option>
     @foreach ($branches as $key => $value)
-    <option value="{{ $key }}">{{ $key }}</option>
+        <option value="{{ $key }}" @if (old('branch') == $key) selected @endif>{{ $key }}</option>
     @endforeach
 </select>
