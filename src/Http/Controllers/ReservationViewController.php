@@ -58,6 +58,8 @@ class ReservationViewController extends Controller
     {
         ReservationService::storeReservationFromRequest($request);
 
+        session()->flash('sent', true);
+
         return redirect()->back();
     }
 }
