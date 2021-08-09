@@ -56,9 +56,12 @@ class ReservationViewController extends Controller
 
     public function reserve(ReserveRequest $request): RedirectResponse
     {
-        ReservationService::storeReservationFromRequest($request);
-
-        session()->flash('sent', true);
+        try {
+            ReservationService::storeReservationFromRequest($request);
+            session()->flash('sent', true);
+        } catch (\Throwable $th) {
+            session()->flash('error', true);
+        }
 
         return redirect()->back();
     }
